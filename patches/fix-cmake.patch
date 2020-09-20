@@ -1,6 +1,6 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -447,7 +447,7 @@ if (MSVC)
+@@ -447,12 +447,11 @@ if (MSVC)
    if (CMAKE_SYSTEM_VERSION MATCHES "10\\.0.*")
      list(APPEND CRYPTOPP_COMPILE_DEFINITIONS "_WIN32_WINNT=0x0A00")
    endif ()
@@ -9,3 +9,26 @@
  endif ()
  
  # Enable PIC for all target machines except 32-bit i386 due to register pressures.
+ if (NOT CRYPTOPP_I386)
+-  SET(CMAKE_POSITION_INDEPENDENT_CODE 1)
+ endif ()
+ 
+ # IBM XLC compiler options for AIX and Linux.
+@@ -595,7 +594,7 @@ endif ()
+ # Must use CMAKE_CXX_COMPILER here due to XLC 13.1 and LLVM front-end.
+ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER MATCHES "xlC")
+ 
+-  if (CRYPTOPP_AMD64 OR CRYPTOPP_I386 OR CRYPTOPP_X32)
++  if (CRYPTOPP_AMD64 OR CRYPTOPP_I386 OR CRYPTOPP_X32 OR CRYPTOPP_MINGW32 OR CRYPTOPP_MINGW64)
+ 
+     CheckCompileLinkOption("-msse2" CRYPTOPP_IA32_SSE2
+                            "${TEST_PROG_DIR}/test_x86_sse2.cxx")
+@@ -1222,7 +1221,7 @@ elseif (CRYPTOPP_POWERPC64)
+   message(STATUS "Platform: PowerPC-64")
+ elseif (CRYPTOPP_MINGW32)
+   message(STATUS "Platform: MinGW-32")
+-elseif (CRYPTOPP_MINGW32)
++elseif (CRYPTOPP_MINGW64)
+   message(STATUS "Platform: MinGW-64")
+ endif ()
+ if (CRYPTOPP_ARMV7A_NEON)
