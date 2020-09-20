@@ -1,23 +1,6 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -301,6 +301,16 @@ DumpMachine(CRYPTOPP_AARCH64 "Aarch64")
- DumpMachine(CRYPTOPP_ARMHF "armhf|arm7l|eabihf")
- DumpMachine(CRYPTOPP_ARM "\\<arm\\>")
- 
-+message(STATUS "CRYPTOPP_AMD64: ${CRYPTOPP_AMD64}")
-+message(STATUS "CRYPTOPP_I386: ${CRYPTOPP_I386}")
-+message(STATUS "CRYPTOPP_MINGW32: ${CRYPTOPP_MINGW32}")
-+message(STATUS "CRYPTOPP_MINGW64: ${CRYPTOPP_MINGW64}")
-+message(STATUS "CRYPTOPP_X32: ${CRYPTOPP_X32}")
-+message(STATUS "CRYPTOPP_AARCH32: ${CRYPTOPP_AARCH32}")
-+message(STATUS "CRYPTOPP_AARCH64: ${CRYPTOPP_AARCH64}")
-+message(STATUS "CRYPTOPP_ARMHF: ${CRYPTOPP_ARMHF}")
-+message(STATUS "CRYPTOPP_ARM: ${CRYPTOPP_ARM}")
-+
- # Detecting PowerPC is only good with GCC. IBM XLC compiler is
- # a little different and I don't know how to ask to the triplet
- # XLC is targeting. Below we punt by setting CRYPTOPP_POWERPC64
-@@ -447,12 +457,11 @@ if (MSVC)
+@@ -447,12 +447,11 @@ if (MSVC)
    if (CMAKE_SYSTEM_VERSION MATCHES "10\\.0.*")
      list(APPEND CRYPTOPP_COMPILE_DEFINITIONS "_WIN32_WINNT=0x0A00")
    endif ()
@@ -31,21 +14,12 @@
  endif ()
  
  # IBM XLC compiler options for AIX and Linux.
-@@ -595,7 +604,7 @@ endif ()
+@@ -595,7 +594,7 @@ endif ()
  # Must use CMAKE_CXX_COMPILER here due to XLC 13.1 and LLVM front-end.
  if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Intel" OR CMAKE_CXX_COMPILER MATCHES "xlC")
  
 -  if (CRYPTOPP_AMD64 OR CRYPTOPP_I386 OR CRYPTOPP_X32)
-+  if (CRYPTOPP_AMD64 OR CRYPTOPP_I386 OR CRYPTOPP_X32 OR CRYPTOPP_MINGW32 OR CRYPTOPP_MINGW64)
++  if (CRYPTOPP_AMD64 OR CRYPTOPP_I386 OR CRYPTOPP_X32 OR (WIN32 AND MINGW))
  
      CheckCompileLinkOption("-msse2" CRYPTOPP_IA32_SSE2
                             "${TEST_PROG_DIR}/test_x86_sse2.cxx")
-@@ -1222,7 +1231,7 @@ elseif (CRYPTOPP_POWERPC64)
-   message(STATUS "Platform: PowerPC-64")
- elseif (CRYPTOPP_MINGW32)
-   message(STATUS "Platform: MinGW-32")
--elseif (CRYPTOPP_MINGW32)
-+elseif (CRYPTOPP_MINGW64)
-   message(STATUS "Platform: MinGW-64")
- endif ()
- if (CRYPTOPP_ARMV7A_NEON)
