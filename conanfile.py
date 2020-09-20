@@ -34,6 +34,10 @@ class CryptoPPConan(ConanFile):
         if self.options.shared:
             del self.options.fPIC
 
+    def build_requirements(self):
+        if tools.os_info.is_windows and not tools.get_env("CONAN_BASH_PATH"):
+            self.build_requires("msys2/20200517")
+
     def source(self):
         suffix = "CRYPTOPP_{}".format(self.version.replace('.', '_'))
         data = self.conan_data["sources"][self.version]
