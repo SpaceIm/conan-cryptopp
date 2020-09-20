@@ -4,15 +4,15 @@
  DumpMachine(CRYPTOPP_ARMHF "armhf|arm7l|eabihf")
  DumpMachine(CRYPTOPP_ARM "\\<arm\\>")
  
-+message(STATUS CRYPTOPP_AMD64)
-+message(STATUS CRYPTOPP_I386)
-+message(STATUS CRYPTOPP_MINGW32)
-+message(STATUS CRYPTOPP_MINGW64)
-+message(STATUS CRYPTOPP_X32)
-+message(STATUS CRYPTOPP_AARCH32)
-+message(STATUS CRYPTOPP_AARCH64)
-+message(STATUS CRYPTOPP_ARMHF)
-+message(STATUS CRYPTOPP_ARM)
++message(STATUS "CRYPTOPP_AMD64: ${CRYPTOPP_AMD64}")
++message(STATUS "CRYPTOPP_I386: ${CRYPTOPP_I386}")
++message(STATUS "CRYPTOPP_MINGW32: ${CRYPTOPP_MINGW32}")
++message(STATUS "CRYPTOPP_MINGW64: ${CRYPTOPP_MINGW64}")
++message(STATUS "CRYPTOPP_X32: ${CRYPTOPP_X32}")
++message(STATUS "CRYPTOPP_AARCH32: ${CRYPTOPP_AARCH32}")
++message(STATUS "CRYPTOPP_AARCH64: ${CRYPTOPP_AARCH64}")
++message(STATUS "CRYPTOPP_ARMHF: ${CRYPTOPP_ARMHF}")
++message(STATUS "CRYPTOPP_ARM: ${CRYPTOPP_ARM}")
 +
  # Detecting PowerPC is only good with GCC. IBM XLC compiler is
  # a little different and I don't know how to ask to the triplet
