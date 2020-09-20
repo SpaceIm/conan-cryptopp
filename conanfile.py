@@ -66,6 +66,7 @@ class CryptoPPConan(ConanFile):
         self._cmake.definitions["BUILD_SHARED"] = self.options.shared
         self._cmake.definitions["BUILD_TESTING"] = False
         self._cmake.definitions["BUILD_DOCUMENTATION"] = False
+        self._cmake.definitions["USE_INTERMEDIATE_OBJECTS_TARGET"] = False
         if self.settings.os == "Android":
             self._cmake.definitions["CRYPTOPP_NATIVE_ARCH"] = True
         self._cmake.configure(build_folder=self._build_subfolder)
@@ -88,9 +89,13 @@ class CryptoPPConan(ConanFile):
 
     def package_info(self):
         # TODO: CMake imported target shouldn't be namespaced (waiting https://github.com/conan-io/conan/issues/7615 to be implemented)
+        self.cpp_info.names["cmake_find_package"] = "cryptopp"
+        self.cpp_info.names["cmake_find_package_multi"] = "cryptopp"
+        self.cpp_info.names["pkg_config"] = "libcryptopp"
         cmake_target = "cryptopp-shared" if self.options.shared else "cryptopp-static"
         self.cpp_info.components["libcryptopp"].names["cmake_find_package"] = cmake_target
         self.cpp_info.components["libcryptopp"].names["cmake_find_package_multi"] = cmake_target
+        self.cpp_info.components["libcryptopp"].names["pkg_config"] = "libcryptopp"
         self.cpp_info.components["libcryptopp"].libs = tools.collect_libs(self)
         if self.settings.os == "Linux":
             self.cpp_info.components["libcryptopp"].system_libs = ["pthread", "m"]
